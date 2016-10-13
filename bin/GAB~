@@ -74,19 +74,23 @@ command :supprimerCompteDefinitive do |c|
   end
 end
 
-desc 'Describe ModifierCompte here'
-arg_name 'Describe arguments to ModifierCompte here'
+desc 'Le client peut modifier les paramètres de son compte'
+arg_name 'identifiantClient pwdClient'
 command :modifierCompte do |c|
   c.action do |global_options,options,args|
-    puts "ModifierCompte command ran"
+      identifiantClient= args.shift
+      pwdClient= args.shift
+    puts "Vous avez modifié votre compte!"
   end
 end
 
-desc 'Describe ConsulterCompte here'
-arg_name 'Describe arguments to ConsulterCompte here'
+desc 'Le client peut consulter son compte pour connaitre sa balance'
+arg_name 'identifiantClient pwdClient'
 command :consulterCompte do |c|
   c.action do |global_options,options,args|
-    puts "ConsulterCompte command ran"
+      identifiantClient= args.shift
+      pwdClient= args.shift
+    puts "Votre balance est de : montant"
   end
 end
 

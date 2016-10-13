@@ -46,7 +46,7 @@ command :creerCompte do |c|
       pwdClient= args.shift
       identifiantAdmin= args.shift
       pwdAmin= args.shift
-    puts "votre compte a été enregistré avec succèe dans la base de donnees"
+    puts "Votre compte a été enregistré avec succès dans la base de données"
    
   end
 end
@@ -67,18 +67,20 @@ desc 'La supression definitive garantie une supression de tous les bases de donn
 arg_name 'identifiantClient identifiantAdmin pwdAmin'
 command :supprimerCompteDefinitive do |c|
   c.action do |global_options,options,args|
-     identifiantClient= args.shift
+      identifiantClient= args.shift
       identifiantAdmin= args.shift
       pwdAmin= args.shift
-    puts "votre compte a été supprimé définitivement"
+    puts "Votre compte a été supprimé définitivement"
   end
 end
 
-desc 'Describe ModifierCompte here'
-arg_name 'Describe arguments to ModifierCompte here'
+desc 'Le client peut modifier les paramètres de son compte'
+arg_name 'identifiantClient pwdClient'
 command :modifierCompte do |c|
   c.action do |global_options,options,args|
-    puts "ModifierCompte command ran"
+      identifiantClient= args.shift
+      pwdClient= args.shift
+    puts "Vous avez modifié votre compte!"
   end
 end
 
