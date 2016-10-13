@@ -1,10 +1,10 @@
 La liste de commandes:
 
-Bin/GAB  CreerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
-Bin/GAB SupprimerCompte identifiantCompte identifiantAdmin pwdAmin
-Bin/GAB SupprimerCompteDefinitive --db identifiantClient identifiantAdmin pwdAmin
-Bin/GAB ModifierCompte identifiantClient pwdClient 
-Bin/GAB ConsulterCompte  identifiantClient pwdClient
+Bin/GAB  creerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
+Bin/GAB supprimerCompte identifiantCompte identifiantAdmin pwdAmin
+Bin/GAB supprimerCompteDefinitive --db identifiantClient identifiantAdmin pwdAmin
+Bin/GAB modifierCompte identifiantClient pwdClient 
+Bin/GAB consulterCompte  identifiantClient pwdClient
 Bin/GAB deposerArgent identifiantClient pwdClient montant
 Bin/GAB retirerArgent identifiantClient pwdClient montant
 
