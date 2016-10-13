@@ -108,6 +108,9 @@ end
 desc 'Lorsque le client retire une somme d''argent, le montant dans son compte diminue de cette somme'
 arg_name 'identifiantClient pwdClient montant'
 command :retirerArgent do |c|
+   identifiantClient= args.shift
+      pwdClient= args.shift
+      montant= args.shift
   c.action do |global_options,options,args|
     puts "RetirerArgent command ran"
   end
