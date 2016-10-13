@@ -52,18 +52,25 @@ command :creerCompte do |c|
 end
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
-arg_name 'Describe arguments to SupprimerCompte here'
+arg_name 'identifiantCompte identifiantAdmin pwdAmin'
 command :supprimerCompte do |c|
   c.action do |global_options,options,args|
-    puts "SupprimerCompte command ran"
+   
+      identifiantClient= args.shift
+      identifiantAdmin= args.shift
+      pwdAmin= args.shift
+    puts "votre compte a été supprimé!"
   end
 end
 
 desc 'Describe SupprimerCompteDefinitive here'
-arg_name 'Describe arguments to SupprimerCompteDefinitive here'
+arg_name 'identifiantClient identifiantAdmin pwdAmin'
 command :supprimerCompteDefinitive do |c|
   c.action do |global_options,options,args|
-    puts "SupprimerCompteDefinitive command ran"
+     identifiantClient= args.shift
+      identifiantAdmin= args.shift
+      pwdAmin= args.shift
+    puts "votre compte a été supprimé définitivement"
   end
 end
 
