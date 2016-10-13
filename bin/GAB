@@ -28,7 +28,7 @@ flag [:f,:flagname]
 
 desc 'Describe CreerCompte here'
 arg_name 'Describe arguments to CreerCompte here'
-command :CreerCompte do |c|
+command :creerCompte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
 
@@ -48,7 +48,7 @@ end
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'Describe arguments to SupprimerCompte here'
-command :SupprimerCompte do |c|
+command :supprimerCompte do |c|
   c.action do |global_options,options,args|
     puts "SupprimerCompte command ran"
   end
@@ -56,7 +56,7 @@ end
 
 desc 'Describe SupprimerCompteDefinitive here'
 arg_name 'Describe arguments to SupprimerCompteDefinitive here'
-command :SupprimerCompteDefinitive do |c|
+command :supprimerCompteDefinitive do |c|
   c.action do |global_options,options,args|
     puts "SupprimerCompteDefinitive command ran"
   end
@@ -64,7 +64,7 @@ end
 
 desc 'Describe ModifierCompte here'
 arg_name 'Describe arguments to ModifierCompte here'
-command :ModifierCompte do |c|
+command :modifierCompte do |c|
   c.action do |global_options,options,args|
     puts "ModifierCompte command ran"
   end
@@ -72,7 +72,7 @@ end
 
 desc 'Describe ConsulterCompte here'
 arg_name 'Describe arguments to ConsulterCompte here'
-command :ConsulterCompte do |c|
+command :consulterCompte do |c|
   c.action do |global_options,options,args|
     puts "ConsulterCompte command ran"
   end
@@ -80,7 +80,7 @@ end
 
 desc 'Describe DeposerArgent here'
 arg_name 'Describe arguments to DeposerArgent here'
-command :DeposerArgent do |c|
+command :deposerArgent do |c|
   c.action do |global_options,options,args|
     puts "DeposerArgent command ran"
   end
@@ -88,7 +88,7 @@ end
 
 desc 'Describe RetirerArgent here'
 arg_name 'Describe arguments to RetirerArgent here'
-command :RetirerArgent do |c|
+command :retirerArgent do |c|
   c.action do |global_options,options,args|
     puts "RetirerArgent command ran"
   end
