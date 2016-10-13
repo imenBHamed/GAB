@@ -11,7 +11,7 @@ end
 
 include GLI::App
 
-program_desc 'GAB vous permet de gérer votre compte bancaire'
+program_desc 'Simulation d'' guichet automatique de banque. Cette application aide le client à gérer son compte bancaire en effectuant des dépots ou des retraits d''argent ainsi que la modification des paramêtres de son compte. Quant à l''administrateur, celui-ci sera capable de créer et de supprimer les comptes des clients.'
 
 version GAB::VERSION
 
