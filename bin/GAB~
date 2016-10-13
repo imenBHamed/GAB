@@ -18,17 +18,17 @@ version GAB::VERSION
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Describe some switch here'
+desc 'creation d''un compte bancaire'
 switch [:s,:switch]
 
-desc 'Describe some flag here'
+desc 'Exécution en ajoutant les données dans le fichier'
 default_value 'the default'
-arg_name 'The name of the argument'
+arg_name 'data!'
 flag [:f,:flagname]
 
-desc 'Describe CreerCompte here'
-arg_name 'Describe arguments to CreerCompte here'
-command :CreerCompte do |c|
+desc 'ajout d''un compte utilisateur'
+arg_name 'nomClient identifiantClient pwdClient identifiantAdmin pwdAmin'
+command :creerCompte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
 
@@ -41,14 +41,19 @@ command :CreerCompte do |c|
      
     # If you have any errors, just raise them
     # raise "that command made no sense"
-
-    puts "CreerCompte command ran"
+      nomClient= args.shift
+      identifiantClient= args.shift
+      pwdClient= args.shift
+      identifiantAdmin= args.shift
+      pwdAmin= args.shift
+    puts "votre compte a été enregistré avec succèe dans la base de donnees"
+   
   end
 end
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'Describe arguments to SupprimerCompte here'
-command :SupprimerCompte do |c|
+command :supprimerCompte do |c|
   c.action do |global_options,options,args|
     puts "SupprimerCompte command ran"
   end
@@ -56,7 +61,7 @@ end
 
 desc 'Describe SupprimerCompteDefinitive here'
 arg_name 'Describe arguments to SupprimerCompteDefinitive here'
-command :SupprimerCompteDefinitive do |c|
+command :supprimerCompteDefinitive do |c|
   c.action do |global_options,options,args|
     puts "SupprimerCompteDefinitive command ran"
   end
@@ -64,7 +69,7 @@ end
 
 desc 'Describe ModifierCompte here'
 arg_name 'Describe arguments to ModifierCompte here'
-command :ModifierCompte do |c|
+command :modifierCompte do |c|
   c.action do |global_options,options,args|
     puts "ModifierCompte command ran"
   end
@@ -72,7 +77,7 @@ end
 
 desc 'Describe ConsulterCompte here'
 arg_name 'Describe arguments to ConsulterCompte here'
-command :ConsulterCompte do |c|
+command :consulterCompte do |c|
   c.action do |global_options,options,args|
     puts "ConsulterCompte command ran"
   end
@@ -80,7 +85,7 @@ end
 
 desc 'Describe DeposerArgent here'
 arg_name 'Describe arguments to DeposerArgent here'
-command :DeposerArgent do |c|
+command :deposerArgent do |c|
   c.action do |global_options,options,args|
     puts "DeposerArgent command ran"
   end
@@ -88,7 +93,7 @@ end
 
 desc 'Describe RetirerArgent here'
 arg_name 'Describe arguments to RetirerArgent here'
-command :RetirerArgent do |c|
+command :retirerArgent do |c|
   c.action do |global_options,options,args|
     puts "RetirerArgent command ran"
   end

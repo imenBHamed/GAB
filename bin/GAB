@@ -18,16 +18,16 @@ version GAB::VERSION
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Describe some switch here'
+desc 'creation d''un compte bancaire'
 switch [:s,:switch]
 
-desc 'Describe some flag here'
+desc 'Exécution en ajoutant les données dans le fichier'
 default_value 'the default'
-arg_name 'The name of the argument'
+arg_name 'data!'
 flag [:f,:flagname]
 
-desc 'Describe CreerCompte here'
-arg_name 'Describe arguments to CreerCompte here'
+desc 'ajout d''un compte utilisateur'
+arg_name 'nomClient identifiantClient pwdClient identifiantAdmin pwdAmin'
 command :creerCompte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
@@ -41,8 +41,13 @@ command :creerCompte do |c|
      
     # If you have any errors, just raise them
     # raise "that command made no sense"
-
-    puts "CreerCompte command ran"
+      nomClient= args.shift
+      identifiantClient= args.shift
+      pwdClient= args.shift
+      identifiantAdmin= args.shift
+      pwdAmin= args.shift
+    puts "votre compte a été enregistré avec succèe dans la base de donnees"
+   
   end
 end
 
