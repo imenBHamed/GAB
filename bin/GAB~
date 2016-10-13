@@ -11,7 +11,7 @@ end
 
 include GLI::App
 
-program_desc 'Describe your application here'
+program_desc 'GAB vous permet de gérer votre compte bancaire'
 
 version GAB::VERSION
 
@@ -46,7 +46,7 @@ command :CreerCompte do |c|
   end
 end
 
-desc 'Describe SupprimerCompte here'
+desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'Describe arguments to SupprimerCompte here'
 command :SupprimerCompte do |c|
   c.action do |global_options,options,args|
