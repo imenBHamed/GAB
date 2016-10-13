@@ -1,6 +1,10 @@
-= GAB
+La liste de commandes:
 
-Describe your project here
-
-:include:GAB.rdoc
+Bin/GAB  CreerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
+Bin/GAB SupprimerCompte identifiantCompte identifiantAdmin pwdAmin
+Bin/GAB SupprimerCompteDefinitive --db identifiantClient identifiantAdmin pwdAmin
+Bin/GAB ModifierCompte identifiantClient pwdClient 
+Bin/GAB ConsulterCompte  identifiantClient pwdClient
+Bin/GAB deposerArgent identifiantClient pwdClient montant
+Bin/GAB retirerArgent identifiantClient pwdClient montant
 
