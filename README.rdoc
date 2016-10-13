@@ -1,10 +1,14 @@
 La liste de commandes:
 
-bin/GAB  creerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
+bin/GAB creerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
 bin/GAB supprimerCompte identifiantCompte identifiantAdmin pwdAmin
 bin/GAB supprimerCompteDefinitive --db identifiantClient identifiantAdmin pwdAmin
 bin/GAB modifierCompte identifiantClient pwdClient 
 bin/GAB consulterCompte  identifiantClient pwdClient
 bin/GAB deposerArgent identifiantClient pwdClient montant
 bin/GAB retirerArgent identifiantClient pwdClient montant
+
+NB: Vous devez saisir bumdle exec avant de mettre la commande
+Par exemple : bundle exec creerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
+
 
