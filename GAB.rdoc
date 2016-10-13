@@ -1,0 +1,5 @@
+= GAB
+
+Generate this with
+    GAB rdoc
+After you have described your command line interface
