@@ -26,7 +26,7 @@ default_value 'the default'
 arg_name 'data!'
 flag [:f,:flagname]
 
-desc 'ajout d''un compte utilisateur'
+desc 'ajout d''un compte utilisateur de la part de l''administrateur seulement'
 arg_name 'nomClient identifiantClient pwdClient identifiantAdmin pwdAmin'
 command :creerCompte do |c|
   c.desc 'Describe a switch to CreerCompte'
@@ -63,7 +63,7 @@ command :supprimerCompte do |c|
   end
 end
 
-desc 'Describe SupprimerCompteDefinitive here'
+desc 'La supression definitive garantie une supression de tous les bases de donnees, cette commande est realisee par l''administrateur '
 arg_name 'identifiantClient identifiantAdmin pwdAmin'
 command :supprimerCompteDefinitive do |c|
   c.action do |global_options,options,args|
