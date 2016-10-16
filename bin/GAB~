@@ -18,34 +18,30 @@ version GAB::VERSION
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'creation d''un compte bancaire'
+desc ''
 switch [:s,:switch]
 
 desc 'Exécution en ajoutant les données dans le fichier'
 default_value 'the default'
-arg_name 'data!'
-flag [:f,:flagname]
+arg_name 'file_db'
+flag [:f,:file]
 
 desc 'ajout d''un compte utilisateur de la part de l''administrateur seulement'
-arg_name 'nomClient identifiantClient pwdClient identifiantAdmin pwdAmin'
-command :creerCompte do |c|
+arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_amin'
+command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
-
   c.desc 'Describe a flag to CreerCompte'
   c.default_value 'default'
   c.flag :f
   c.action do |global_options,options,args|
-
-    # Your command logic here
-     
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
-      nomClient= args.shift
-      identifiantClient= args.shift
-      pwdClient= args.shift
-      identifiantAdmin= args.shift
-      pwdAmin= args.shift
+      args = [STDIN] if args.empty?
+      db_file = global_options[:file]
+      nom_client= args.shift
+      identifiant_client= args.shift
+      pwd_client= args.shift
+      identifiant_admin= args.shift
+      pwd_admin= args.shift
     puts "Votre compte a été enregistré avec succès dans la base de données"
    
   end
@@ -53,7 +49,7 @@ end
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'identifiantCompte identifiantAdmin pwdAmin'
-command :supprimerCompte do |c|
+command :supprimer_compte do |c|
   c.action do |global_options,options,args|
    
       identifiantClient= args.shift
@@ -64,55 +60,61 @@ command :supprimerCompte do |c|
 end
 
 desc 'La supression definitive garantie une supression de tous les bases de donnees, cette commande est realisee par l''administrateur '
-arg_name 'identifiantClient identifiantAdmin pwdAmin'
-command :supprimerCompteDefinitive do |c|
+arg_name 'identifiant_client identifiant_admin pwd_admin'
+command :supprimer_compte_definitive do |c|
   c.action do |global_options,options,args|
-      identifiantClient= args.shift
-      identifiantAdmin= args.shift
-      pwdAmin= args.shift
+    
+      identifiant_client= args.shift
+      identifiant_admin= args.shift
+      pwd_admin= args.shift
+      
     puts "Votre compte a été supprimé définitivement"
   end
 end
 
 desc 'Le client peut modifier les paramètres de son compte'
-arg_name 'identifiantClient pwdClient'
-command :modifierCompte do |c|
+arg_name 'identifiant_client pwd_client'
+command :modifier_compte do |c|
   c.action do |global_options,options,args|
-      identifiantClient= args.shift
-      pwdClient= args.shift
+    
+      identifiant_client= args.shift
+      pwd_client= args.shift
+      
     puts "Vous avez modifié votre compte!"
   end
 end
 
 desc 'Le client peut consulter son compte pour connaitre sa balance'
-arg_name 'identifiantClient pwdClient'
-command :consulterCompte do |c|
+arg_name 'identifiant_client pwd_client'
+command :consulter_compte do |c|
   c.action do |global_options,options,args|
-      identifiantClient= args.shift
-      pwdClient= args.shift
+      identifiant_client= args.shift
+      pwd_client= args.shift
     puts "Votre balance est de : montant"
   end
 end
 
 desc 'Le client ajoute une somme d''argent à son compte'
-arg_name 'identifiantClient pwdClient montant'
-command :deposerArgent do |c|
-  identifiantClient= args.shift
-      pwdClient= args.shift
-      montant= args.shift
+arg_name 'identifiant_client pwd_client montant'
+command :deposer_argent do |c|
+
   c.action do |global_options,options,args|
+      identifiant_client= args.shift
+      pwd_client= args.shift
+      montant= args.shift
     puts "DeposerArgent command ran"
   end
 end
 
 desc 'Lorsque le client retire une somme d''argent, le montant dans son compte diminue de cette somme'
-arg_name 'identifiantClient pwdClient montant'
-command :retirerArgent do |c|
-   identifiantClient= args.shift
-      pwdClient= args.shift
-      montant= args.shift
+arg_name 'identifiant_client pwd_client montant'
+command :retirer_argent do |c|
+  
   c.action do |global_options,options,args|
-    puts "RetirerArgent command ran"
+     identifiant_client= args.shift
+      pwd_client= args.shift
+      montant= args.shift
+    puts "Retirer_argent command ran"
   end
 end
 
