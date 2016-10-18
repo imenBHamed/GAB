@@ -22,7 +22,7 @@ desc ''
 switch [:s,:switch]
 
 desc 'Exécution en ajoutant les données dans le fichier'
-default_value 'the default'
+default_value '/home/gg191011/GAB/bin/db.txt'
 arg_name 'file_db'
 flag [:f,:file]
 
@@ -33,28 +33,31 @@ command :creer_compte do |c|
   c.switch :s
   c.desc 'Describe a flag to CreerCompte'
   c.default_value 'default'
-  c.flag :f
+  
   c.action do |global_options,options,args|
-      args = [STDIN] if args.empty?
-      db_file = global_options[:file]
+     # args = [STDIN] if args.empty?
+      db_file = global_options[:f]
       nom_client= args.shift
       identifiant_client= args.shift
       pwd_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
+
+ 
     puts "Votre compte a été enregistré avec succès dans la base de données"
-   
   end
-end
+  end
+
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
-arg_name 'identifiantCompte identifiantAdmin pwdAmin'
+arg_name 'identifiant_compte identifiant_admin pwd_admin'
 command :supprimer_compte do |c|
+  
   c.action do |global_options,options,args|
    
-      identifiantClient= args.shift
-      identifiantAdmin= args.shift
-      pwdAmin= args.shift
+      identifiant_client= args.shift
+      identifiant_admin= args.shift
+      pwd_admin= args.shift
     puts "votre compte a été supprimé!"
   end
 end
@@ -88,9 +91,20 @@ desc 'Le client peut consulter son compte pour connaitre sa balance'
 arg_name 'identifiant_client pwd_client'
 command :consulter_compte do |c|
   c.action do |global_options,options,args|
+      db_file = global_options[:file]
       identifiant_client= args.shift
       pwd_client= args.shift
-    puts "Votre balance est de : montant"
+      
+      ligne = File.open(db_file, "r").readlines
+      utilisateur= identifiant_client+"/"+pwd_client
+      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
+      
+       if exist[0].to_i >0 then
+	   montant =  ligne[exist [0].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
+	   puts "votre compte contient:#{montant} $"
+       else
+	 puts "identifiant et password sont invalide"
+       end
   end
 end
 
