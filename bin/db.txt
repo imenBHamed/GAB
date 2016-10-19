@@ -1,2 +1,10 @@
 admin21/admin21
-user1/pwd1/user/admin21/admin21-12000 
+identifiantClient/pwdClient/nomClient/54261
+user1/pwd1/user/admin21/admin21-120000
+identifiantClient21/pwdClient/nomClient/admin21/admin21-45216325
+user2/pwdk2/userA/admin21/admin21-0001
+pwd22/userA2/user832/admin21/admin21-96666
+user3/pwd92/user88A/admin21/admin21-0001
+user4/pwd22/user8A/admin21/admin21-0001
+user5/pwd2/user2A/admin21/admin21-5001
+k/j/jj/admin21/admin21-1555

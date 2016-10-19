@@ -27,7 +27,7 @@ arg_name 'file_db'
 flag [:f,:file]
 
 desc 'ajout d''un compte utilisateur de la part de l''administrateur seulement'
-arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_amin'
+arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_admin'
 command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
@@ -42,9 +42,20 @@ command :creer_compte do |c|
       pwd_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
+      administrateur= identifiant_admin << "/" << pwd_admin
+      utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
+      ligne = File.open(db_file, "a")
+if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
+  if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
+    nouveauCompte= utilisateur << "/" <<  administrateur
+ligne.puts "\r"+ nouveauCompte
+puts "Votre compte a été enregistré avec succès dans la base de données"
+  else
+    puts "utilisateur deja existe dans la base de donnees"
+  end
 
- 
-    puts "Votre compte a été enregistré avec succès dans la base de données"
+end
+      
   end
   end
 
@@ -98,12 +109,14 @@ command :consulter_compte do |c|
       ligne = File.open(db_file, "r").readlines
       utilisateur= identifiant_client+"/"+pwd_client
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-      
-       if exist[0].to_i >0 then
-	   montant =  ligne[exist [0].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-	   puts "votre compte contient:#{montant} $"
+
+       if exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i > 0 then
+	   montant =  ligne[exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
+	   puts "votre compte contient:#{montant}$"
+	  
        else
-	 puts "identifiant et password sont invalide"
+	 
+	 puts "identifiant et password sont invalides"
        end
   end
 end
