@@ -67,11 +67,25 @@ arg_name 'identifiant_compte identifiant_admin pwd_admin'
 command :supprimer_compte do |c|
   
   c.action do |global_options,options,args|
-   
+      db_file = global_options[:file]
       identifiant_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-    puts "votre compte a été supprimé!"
+      administrateur= identifiant_admin << "/" << pwd_admin
+      ligne = File.open(db_file, "a+").readlines
+      position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i
+      position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
+  if position_admin==1 then
+    if position_client >1 then
+    `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
+     puts "votre compte a été supprimé!"
+    else
+      puts "Utilisateur n''existe pas dans la base de donnees"
+    end
+  else
+    puts "Vous n'avez pas l''autorisation de supprimer un compte"
+  end
+  
   end
 end
 

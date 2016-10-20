@@ -26,7 +26,7 @@ default_value '/home/gg191011/GAB/bin/db.txt'
 arg_name 'file_db'
 flag [:f,:file]
 
-desc 'ajout d''un compte utilisateur de la part de l''administrateur seulement'
+desc 'Ajout d''un compte utilisateur de la part de l''administrateur seulement'
 arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_admin'
 command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
@@ -54,7 +54,7 @@ puts "Votre compte a ete enregistre avec succes dans la base de donnees"
     puts "Utilisateur deja existe dans la base de donnees"
   end
 else
-  puts "Vous n'avez pas l'autorisation d'ajouter un nouveau compte"
+  puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
 
 end
       
@@ -67,11 +67,27 @@ arg_name 'identifiant_compte identifiant_admin pwd_admin'
 command :supprimer_compte do |c|
   
   c.action do |global_options,options,args|
-   
+      db_file = global_options[:file]
       identifiant_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-    puts "votre compte a été supprimé!"
+      administrateur= identifiant_admin << "/" << pwd_admin
+      ligne = File.open(db_file, "a+").readlines
+      position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i
+      position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
+# `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
+
+  if position_admin==1 then
+  if position_client >1 then
+    `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
+     puts "votre compte a été supprimé!"
+    else
+      puts "Utilisateur n''existe pas dans la base de donnees"
+    end
+  else
+    puts "Vous n'avez pas l''autorisation de supprimer un compte"
+  end
+  
   end
 end
 
@@ -84,11 +100,11 @@ command :supprimer_compte_definitive do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
       
-    puts "Votre compte a été supprimé définitivement"
+    puts "Votre compte a ete supprime definitivement"
   end
 end
 
-desc 'Le client peut modifier les paramètres de son compte'
+desc 'Le client peut modifier les parametres de son compte'
 arg_name 'identifiant_client pwd_client'
 command :modifier_compte do |c|
   c.action do |global_options,options,args|
@@ -96,7 +112,7 @@ command :modifier_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       
-    puts "Vous avez modifié votre compte!"
+    puts "Vous avez modifie votre compte!"
   end
 end
 
