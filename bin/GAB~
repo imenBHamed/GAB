@@ -75,10 +75,8 @@ command :supprimer_compte do |c|
       ligne = File.open(db_file, "a+").readlines
       position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i
       position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
-# `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
-
   if position_admin==1 then
-  if position_client >1 then
+    if position_client >1 then
     `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
      puts "votre compte a été supprimé!"
     else
@@ -157,10 +155,33 @@ arg_name 'identifiant_client pwd_client montant'
 command :retirer_argent do |c|
   
   c.action do |global_options,options,args|
-     identifiant_client= args.shift
+      db_file = global_options[:file]
+      identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
-    puts "Retirer_argent command ran"
+      
+      ligne = File.open(db_file, "a+").readlines
+      utilisateur= identifiant_client+"/"+pwd_client
+      
+      if montant.to_i>0 then
+      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
+      compteur=i=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
+       if exist[0].to_i > 0 then
+	 argent =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
+	   if argent.to_i>0 then
+	     nouveauArgent= argent.to_i-montant.to_i
+	     `#{"sed -i '#{compteur}s/#{argent}/#{nouveauArgent}/' #{db_file}"}`
+	         if nouveauArgent> -101 then
+		 else
+		   puts "Desole,vous n''avez pas d'argent"
+		 end
+	   end
+       else
+	 puts "Identifiant ou mot de passe sont invalides"
+       end
+      else
+	puts "montant insuffisant"
+      end
   end
 end
 
