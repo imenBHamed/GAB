@@ -45,19 +45,17 @@ command :creer_compte do |c|
       administrateur= identifiant_admin << "/" << pwd_admin
       utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
       ligne = File.open(db_file, "a")
-if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
-  if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
-    nouveauCompte= utilisateur << "/" <<  administrateur
-ligne.puts "\r"+ nouveauCompte
-puts "Votre compte a ete enregistre avec succes dans la base de donnees"
-  else
-    puts "Utilisateur deja existe dans la base de donnees"
-  end
-else
-  puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
-
-end
-      
+          if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
+	    if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
+	      nouveauCompte= utilisateur << "/" <<  administrateur
+	      ligne.puts "\r"+ nouveauCompte
+	      puts "Votre compte a ete enregistre avec succes dans la base de donnees"
+	    else
+	      puts "Utilisateur deja existe dans la base de donnees"
+	    end
+	  else
+	    puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
+	  end
   end
   end
 
@@ -97,19 +95,32 @@ command :supprimer_compte_definitive do |c|
       identifiant_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-      
     puts "Votre compte a ete supprime definitivement"
   end
 end
 
 desc 'Le client peut modifier les parametres de son compte'
-arg_name 'identifiant_client pwd_client'
+arg_name 'identifiant_client pwd_client nouveau_pwd_client'
 command :modifier_compte do |c|
   c.action do |global_options,options,args|
-    
+      db_file = global_options[:file]
       identifiant_client= args.shift
       pwd_client= args.shift
-      
+      nouveau_pwd_client= args.shift
+           utilisateur=identifiant_client << "/" << pwd_client 
+
+      ligne = File.open(db_file, "a+").readlines
+       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
+ 	    if exist.to_i>0 then
+	      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
+	      puts compteur
+	      if !nouveau_pwd_client.empty? then
+		   
+		   `#{"sed -i '#{compteur}s/#{pwd_client}/#{nouveau_pwd_client}/' #{db_file}"}`
+		 
+	      end
+	      
+	    end 
     puts "Vous avez modifie votre compte!"
   end
 end
@@ -165,7 +176,7 @@ command :retirer_argent do |c|
       
       if montant.to_i>0 then
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-      compteur=i=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
+      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
        if exist[0].to_i > 0 then
 	 argent =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
 	   if argent.to_i>0 then
