@@ -11,7 +11,7 @@ end
 
 include GLI::App
 
-program_desc 'Simulation d'' guichet automatique de banque. Cette application aide le client à gérer son compte bancaire en effectuant des dépots ou des retraits d''argent ainsi que la modification des paramêtres de son compte. Quant à l''administrateur, celui-ci sera capable de créer et de supprimer les comptes des clients.'
+program_desc 'Simulation d'' guichet automatique de banque. Cette application aide le client à gerer son compte bancaire en effectuant des depots ou des retraits d''argent ainsi que la modification des parametres de son compte. Quant à l''administrateur, celui-ci sera capable de creer et de supprimer les comptes des clients.'
 
 version GAB::VERSION
 
@@ -26,7 +26,7 @@ default_value '/home/gg191011/GAB/bin/db.txt'
 arg_name 'file_db'
 flag [:f,:file]
 
-desc 'ajout d''un compte utilisateur de la part de l''administrateur seulement'
+desc 'Ajout d''un compte utilisateur de la part de l''administrateur seulement'
 arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_admin'
 command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
@@ -49,10 +49,12 @@ if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
   if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
     nouveauCompte= utilisateur << "/" <<  administrateur
 ligne.puts "\r"+ nouveauCompte
-puts "Votre compte a été enregistré avec succès dans la base de données"
+puts "Votre compte a ete enregistre avec succes dans la base de donnees"
   else
-    puts "utilisateur deja existe dans la base de donnees"
+    puts "Utilisateur deja existe dans la base de donnees"
   end
+else
+  puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
 
 end
       
@@ -82,11 +84,11 @@ command :supprimer_compte_definitive do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
       
-    puts "Votre compte a été supprimé définitivement"
+    puts "Votre compte a ete supprime definitivement"
   end
 end
 
-desc 'Le client peut modifier les paramètres de son compte'
+desc 'Le client peut modifier les parametres de son compte'
 arg_name 'identifiant_client pwd_client'
 command :modifier_compte do |c|
   c.action do |global_options,options,args|
@@ -94,7 +96,7 @@ command :modifier_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       
-    puts "Vous avez modifié votre compte!"
+    puts "Vous avez modifie votre compte!"
   end
 end
 
@@ -113,11 +115,11 @@ command :consulter_compte do |c|
        if exist[0].to_i > 0 then
 	 
 	   montant =  ligne[exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-	   puts "votre compte contient:#{montant}$"
+	   puts "Votre compte contient:#{montant}$"
 	  
        else
 	 
-	 puts "identifiant et password sont invalides"
+	 puts "Identifiant ou mot de passe sont invalides"
        end
   end
 end
