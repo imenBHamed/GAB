@@ -22,12 +22,12 @@ desc ''
 switch [:s,:switch]
 
 desc 'Exécution en ajoutant les données dans le fichier'
-default_value '/home/gg191011/GAB/bin/db.txt'
+default_value 'bin/db.txt'
 arg_name 'file_db'
 flag [:f,:file]
 
 desc 'Ajout d''un compte utilisateur de la part de l''administrateur seulement'
-arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_admin'
+arg_name 'identifiant_client pwd_client nom_client identifiant_admin pwd_admin'
 command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
@@ -47,8 +47,8 @@ command :creer_compte do |c|
       ligne = File.open(db_file, "a")
           if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
 	    if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
-	      nouveauCompte= utilisateur << "/" <<  administrateur
-	      ligne.puts "\r"+ nouveauCompte
+	     
+	      ligne.puts "\r"+ utilisateur
 	      puts "Votre compte a ete enregistre avec succes dans la base de donnees"
 	    else
 	      puts "Utilisateur deja existe dans la base de donnees"
@@ -136,7 +136,7 @@ command :consulter_compte do |c|
       ligne = File.open(db_file, "r").readlines
       utilisateur= identifiant_client+"/"+pwd_client
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-
+ 
        if exist[0].to_i > 0 then
 	 
 	   montant =  ligne[exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
