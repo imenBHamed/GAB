@@ -153,13 +153,38 @@ desc 'Le client ajoute une somme d''argent à son compte'
 arg_name 'identifiant_client pwd_client montant'
 command :deposer_argent do |c|
 
-  c.action do |global_options,options,args|
+      c.action do |global_options,options,args|
+      db_file = global_options[:file]
       identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
-    puts "DeposerArgent command ran"
+      
+      ligne = File.open(db_file, "a+").readlines
+      utilisateur= identifiant_client+"/"+pwd_client
+      
+      if montant.to_i>0 then
+      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
+      compteur=i=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
+       if exist[0].to_i > 0 then
+	 ancien_montant =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
+	   if ancien_montant.to_i>0 then
+	     nouveau_montant= ancien_montant.to_i+montant.to_i
+	 
+	  ## ajouter ici un controle sur le montant il doit etre entier et > 0
+	       
+         `#{"sed -i '#{compteur}s/#{ancien_montant}/#{nouveau_montant}/' #{db_file}"}`
+		       puts "Depot effectue avec succes"
+		
+	   end
+       else
+	 puts "Identifiant ou mot de passe sont invalides"
+       end
+      else
+	puts "montant insuffisant"
+      end
   end
 end
+
 
 desc 'Lorsque le client retire une somme d''argent, le montant dans son compte diminue de cette somme'
 arg_name 'identifiant_client pwd_client montant'
