@@ -27,14 +27,14 @@ module GAB
 	    else
 	      puts "Utilisateur deja existe dans la base de donnees"
 	    end
-	  else
+     else
 	    puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
-	  end
+     end
   end
   
   def self.supprimer(identifiant_client, administrateur,db_file)
 
-   ligne = File.open(db_file, "a+").readlines
+   
       position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i
       position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
   if position_admin==1 then
@@ -51,7 +51,7 @@ module GAB
   def self.modifier(db_file, identifiant_client,pwd_client, nouveau_pwd_client)
     old=identifiant_client + "/" + pwd_client 
 
-   ligne = File.open(db_file, "a+").readlines
+   
        exist= `#{"grep -n #{old} #{db_file}"}`
  	    if exist.to_i>0 then
 	      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
@@ -74,7 +74,7 @@ module GAB
   
   
   def self.retirer(utilisateur, db_file,montant,ligne)
-       if montant.to_i>0 then
+    if montant.to_i>0 then
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
       compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
        if exist[0].to_i > 0 then
@@ -92,9 +92,9 @@ module GAB
        else
 	 puts "Identifiant ou mot de passe sont invalides"
        end
-      else
+    else
 	puts "montant insuffisant"
-      end
+    end
   end
   
   def self.deposer(utilisateur,db_file,montant)
@@ -111,8 +111,5 @@ module GAB
 	 puts "Identifiant ou mot de passe sont invalides"
        end
   end
-  
-  
-  
-  
+
 end

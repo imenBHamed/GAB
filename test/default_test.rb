@@ -1,14 +1,7 @@
 require 'test_helper'
+require 'GAB'
 
-class DefaultTest < Test::Unit::TestCase
-
-  def setup
-  end
-
-  def teardown
-  end
-
-  def test_the_truth
-    assert true
+describe "db_file" do
+  it "db_file" do
   end
 end

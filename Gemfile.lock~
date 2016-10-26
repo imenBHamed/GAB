@@ -34,7 +34,6 @@ GEM
     gherkin (3.2.0)
     gli (2.14.0)
     json (1.8.3)
-    minitest (5.9.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
     rake (11.3.0)
@@ -52,6 +51,5 @@ PLATFORMS
 DEPENDENCIES
   GAB!
   aruba
-  minitest
   rake
   rdoc
