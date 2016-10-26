@@ -22,12 +22,12 @@ desc ''
 switch [:s,:switch]
 
 desc 'Exécution en ajoutant les données dans le fichier'
-default_value '/home/gg191011/GAB/bin/db.txt'
+default_value 'bin/db.txt'
 arg_name 'file_db'
 flag [:f,:file]
 
 desc 'Ajout d''un compte utilisateur de la part de l''administrateur seulement'
-arg_name 'nom_client identifiant_client pwd_client identifiant_admin pwd_admin'
+arg_name 'identifiant_client pwd_client nom_client identifiant_admin pwd_admin'
 command :creer_compte do |c|
   c.desc 'Describe a switch to CreerCompte'
   c.switch :s
@@ -45,9 +45,11 @@ command :creer_compte do |c|
       administrateur= identifiant_admin << "/" << pwd_admin
       utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
       ligne = File.open(db_file, "a")
+
       resultat=GAB.creer(utilisateur,administrateur,ligne,db_file)
       puts resultat
    
+
   end
   end
 
@@ -94,9 +96,12 @@ command :consulter_compte do |c|
       
       ligne = File.open(db_file, "r").readlines
       utilisateur= identifiant_client+"/"+pwd_client
+
     resultat=GAB.consulter(utilisateur,ligne,db_file)
     puts resultat
  
+
+
   end
 end
 
@@ -104,13 +109,14 @@ desc 'Le client ajoute une somme d''argent à son compte'
 arg_name 'identifiant_client pwd_client montant'
 command :deposer_argent do |c|
 
-  c.action do |global_options,options,args|
-    
+      c.action do |global_options,options,args|
+
       db_file = global_options[:file]
       identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
       
+
       utilisateur= identifiant_client+"/"+pwd_client
       
       if montant.to_i>0 then
@@ -119,8 +125,11 @@ command :deposer_argent do |c|
 	puts "montant insuffisant"
       end
      
+
+
   end
 end
+
 
 desc 'Lorsque le client retire une somme d''argent, le montant dans son compte diminue de cette somme'
 arg_name 'identifiant_client pwd_client montant'

@@ -97,7 +97,7 @@ module GAB
       end
   end
   
-  def self.deposer(utilisateur,db_file)
+  def self.deposer(utilisateur,db_file,montant)
           ligne = File.open(db_file, "a+").readlines
 
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
