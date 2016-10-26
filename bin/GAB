@@ -35,7 +35,6 @@ command :creer_compte do |c|
   c.default_value 'default'
   
   c.action do |global_options,options,args|
-    
       db_file = global_options[:f]
       nom_client= args.shift
       identifiant_client= args.shift
@@ -52,7 +51,6 @@ end
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'identifiant_client identifiant_admin pwd_admin'
 command :supprimer_compte do |c|
-  
   c.action do |global_options,options,args|
       db_file = global_options[:file]
       identifiant_client= args.shift
@@ -76,7 +74,6 @@ command :modifier_compte do |c|
       nouveau_pwd_client= args.shift
      
       resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
- 
       puts resultat    
 
   end
