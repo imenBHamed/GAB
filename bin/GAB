@@ -35,6 +35,7 @@ command :creer_compte do |c|
   c.default_value 'default'
   
   c.action do |global_options,options,args|
+    
       db_file = global_options[:f]
       nom_client= args.shift
       identifiant_client= args.shift
@@ -44,9 +45,8 @@ command :creer_compte do |c|
    
       resultat=GAB.creer(nom_client,identifiant_client,pwd_client,identifiant_admin,pwd_admin,db_file)
       puts resultat
-
   end
-  end
+end
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'identifiant_client identifiant_admin pwd_admin'
@@ -64,6 +64,7 @@ command :supprimer_compte do |c|
   end
 end
 
+
 desc 'Le client peut modifier les parametres de son compte'
 arg_name 'identifiant_client pwd_client nouveau_pwd_client'
 command :modifier_compte do |c|
@@ -72,9 +73,10 @@ command :modifier_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       nouveau_pwd_client= args.shift
-      
- resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
- puts resultat    
+     
+      resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
+ 
+      puts resultat    
 
   end
 end
@@ -93,20 +95,18 @@ command :consulter_compte do |c|
   end
 end
 
+
 desc 'Le client ajoute une somme d''argent à son compte'
 arg_name 'identifiant_client pwd_client montant'
 command :deposer_argent do |c|
-
-      c.action do |global_options,options,args|
-
-      db_file = global_options[:file]
-      identifiant_client= args.shift
-      pwd_client= args.shift
-      montant= args.shift
+  c.action do |global_options,options,args|
+    db_file = global_options[:file]
+    identifiant_client= args.shift
+    pwd_client= args.shift
+    montant= args.shift
     
-      resultat= GAB.deposer(identifiant_client,pwd_client, db_file,montant)
-      puts resultat
-
+    resultat= GAB.deposer(identifiant_client,pwd_client, db_file,montant)
+    puts resultat
   end
 end
 
@@ -114,7 +114,6 @@ end
 desc 'Lorsque le client retire une somme d''argent, le montant dans son compte diminue de cette somme'
 arg_name 'identifiant_client pwd_client montant'
 command :retirer_argent do |c|
-  
   c.action do |global_options,options,args|
       db_file = global_options[:file]
       identifiant_client= args.shift
@@ -125,6 +124,7 @@ command :retirer_argent do |c|
       puts resultat
   end
 end
+
 
 pre do |global,command,options,args|
   # Pre logic here
