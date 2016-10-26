@@ -35,24 +35,18 @@ command :creer_compte do |c|
   c.default_value 'default'
   
   c.action do |global_options,options,args|
-     # args = [STDIN] if args.empty?
       db_file = global_options[:f]
       nom_client= args.shift
       identifiant_client= args.shift
       pwd_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-      administrateur= identifiant_admin << "/" << pwd_admin
-      utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
-      ligne = File.open(db_file, "a")
-
-      resultat=GAB.creer(utilisateur,administrateur,ligne,db_file)
-      puts resultat
    
+      resultat=GAB.creer(nom_client,identifiant_client,pwd_client,identifiant_admin,pwd_admin,db_file)
+      puts resultat
 
   end
   end
-
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
 arg_name 'identifiant_client identifiant_admin pwd_admin'
@@ -63,14 +57,12 @@ command :supprimer_compte do |c|
       identifiant_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-      administrateur= identifiant_admin << "/" << pwd_admin
-      resultat= GAB.supprimer(identifiant_client, administrateur,db_file)
+      
+      resultat= GAB.supprimer(identifiant_client, identifiant_admin,pwd_admin,db_file)
       puts resultat
-     
-  
+    
   end
 end
-
 
 desc 'Le client peut modifier les parametres de son compte'
 arg_name 'identifiant_client pwd_client nouveau_pwd_client'
@@ -80,6 +72,7 @@ command :modifier_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       nouveau_pwd_client= args.shift
+      
  resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
  puts resultat    
 
@@ -94,13 +87,8 @@ command :consulter_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       
-      ligne = File.open(db_file, "r").readlines
-      utilisateur= identifiant_client+"/"+pwd_client
-
-    resultat=GAB.consulter(utilisateur,ligne,db_file)
-    puts resultat
- 
-
+      resultat=GAB.consulter(identifiant_client,pwd_client,db_file)
+       puts resultat
 
   end
 end
@@ -115,17 +103,9 @@ command :deposer_argent do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
-      
-
-      utilisateur= identifiant_client+"/"+pwd_client
-      
-      if montant.to_i>0 then
-    GAB.deposer(utilisateur, db_file,montant)
-      else
-	puts "montant insuffisant"
-      end
-     
-
+    
+      resultat= GAB.deposer(identifiant_client,pwd_client, db_file,montant)
+      puts resultat
 
   end
 end
@@ -140,11 +120,9 @@ command :retirer_argent do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
-      
-      ligne = File.open(db_file, "a+").readlines
-      utilisateur= identifiant_client+"/"+pwd_client
-      
-   GAB.retirer(utilisateur, db_file,montant,ligne)
+  
+      resultat=GAB.retirer(identifiant_client,pwd_client,db_file,montant)
+      puts resultat
   end
 end
 
