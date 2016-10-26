@@ -45,23 +45,15 @@ command :creer_compte do |c|
       administrateur= identifiant_admin << "/" << pwd_admin
       utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
       ligne = File.open(db_file, "a")
-          if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
-	    if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
-	      nouveauCompte= utilisateur << "/" <<  administrateur
-	      ligne.puts "\r"+ nouveauCompte
-	      puts "Votre compte a ete enregistre avec succes dans la base de donnees"
-	    else
-	      puts "Utilisateur deja existe dans la base de donnees"
-	    end
-	  else
-	    puts "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
-	  end
+      resultat=GAB.creer(utilisateur,administrateur,ligne,db_file)
+      puts resultat
+   
   end
   end
 
 
 desc 'Supprimer un compte d''un utilisateur, seul l''adminisrtateur peut le faire'
-arg_name 'identifiant_compte identifiant_admin pwd_admin'
+arg_name 'identifiant_client identifiant_admin pwd_admin'
 command :supprimer_compte do |c|
   
   c.action do |global_options,options,args|
@@ -70,34 +62,13 @@ command :supprimer_compte do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
       administrateur= identifiant_admin << "/" << pwd_admin
-      ligne = File.open(db_file, "a+").readlines
-      position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i
-      position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
-  if position_admin==1 then
-    if position_client >1 then
-    `#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
-     puts "votre compte a été supprimé!"
-    else
-      puts "Utilisateur n''existe pas dans la base de donnees"
-    end
-  else
-    puts "Vous n'avez pas l''autorisation de supprimer un compte"
-  end
+      resultat= GAB.supprimer(identifiant_client, administrateur,db_file)
+      puts resultat
+     
   
   end
 end
 
-desc 'La supression definitive garantie une supression de tous les bases de donnees, cette commande est realisee par l''administrateur '
-arg_name 'identifiant_client identifiant_admin pwd_admin'
-command :supprimer_compte_definitive do |c|
-  c.action do |global_options,options,args|
-    
-      identifiant_client= args.shift
-      identifiant_admin= args.shift
-      pwd_admin= args.shift
-    puts "Votre compte a ete supprime definitivement"
-  end
-end
 
 desc 'Le client peut modifier les parametres de son compte'
 arg_name 'identifiant_client pwd_client nouveau_pwd_client'
@@ -107,21 +78,9 @@ command :modifier_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       nouveau_pwd_client= args.shift
-           utilisateur=identifiant_client << "/" << pwd_client 
+ resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
+ puts resultat    
 
-      ligne = File.open(db_file, "a+").readlines
-       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
- 	    if exist.to_i>0 then
-	      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-	      puts compteur
-	      if !nouveau_pwd_client.empty? then
-		   
-		   `#{"sed -i '#{compteur}s/#{pwd_client}/#{nouveau_pwd_client}/' #{db_file}"}`
-		 
-	      end
-	      
-	    end 
-    puts "Vous avez modifie votre compte!"
   end
 end
 
@@ -135,17 +94,9 @@ command :consulter_compte do |c|
       
       ligne = File.open(db_file, "r").readlines
       utilisateur= identifiant_client+"/"+pwd_client
-      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-
-       if exist[0].to_i > 0 then
-	 
-	   montant =  ligne[exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-	   puts "Votre compte contient:#{montant}$"
-	  
-       else
-	 
-	 puts "Identifiant ou mot de passe sont invalides"
-       end
+    resultat=GAB.consulter(utilisateur,ligne,db_file)
+    puts resultat
+ 
   end
 end
 
@@ -154,10 +105,20 @@ arg_name 'identifiant_client pwd_client montant'
 command :deposer_argent do |c|
 
   c.action do |global_options,options,args|
+    
+      db_file = global_options[:file]
       identifiant_client= args.shift
       pwd_client= args.shift
       montant= args.shift
-    puts "DeposerArgent command ran"
+      
+      utilisateur= identifiant_client+"/"+pwd_client
+      
+      if montant.to_i>0 then
+    GAB.deposer(utilisateur, db_file,montant)
+      else
+	puts "montant insuffisant"
+      end
+     
   end
 end
 
@@ -174,27 +135,7 @@ command :retirer_argent do |c|
       ligne = File.open(db_file, "a+").readlines
       utilisateur= identifiant_client+"/"+pwd_client
       
-      if montant.to_i>0 then
-      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-       if exist[0].to_i > 0 then
-	 argent =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-	   if argent.to_i>0 then
-	     nouveauArgent= argent.to_i-montant.to_i
-	 
-	         if nouveauArgent> -101 then
-		       `#{"sed -i '#{compteur}s/#{argent}/#{nouveauArgent}/' #{db_file}"}`
-		       puts "operation effectuee avec suces"
-		 else
-		   puts "Desole,vous n''avez pas d'argent"
-		 end
-	   end
-       else
-	 puts "Identifiant ou mot de passe sont invalides"
-       end
-      else
-	puts "montant insuffisant"
-      end
+   GAB.retirer(utilisateur, db_file,montant,ligne)
   end
 end
 
