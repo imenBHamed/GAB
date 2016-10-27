@@ -100,8 +100,8 @@ module GAB
     ligne = File.open(db_file, "a+").readlines  
     if montant.to_i>0 then      
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`      
-      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-      if exist[0].to_i > 0 then        
+      if exist[0].to_i > 0 then   
+	compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
 	ancien_montant =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]        
 	nouveau_montant= ancien_montant.to_i+montant.to_i        
 	`#{"sed -i '#{compteur}s/#{ancien_montant}/#{nouveau_montant}/' #{db_file}"}`

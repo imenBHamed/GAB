@@ -10,5 +10,13 @@ describe GAB do
           .must_be_empty
       end
     end
+    
+    describe "cas avec inexistance d'un client" do
+      it "retourne un message d'erreur contenant 'Identifiant ou mot de passe sont invalides' " do
+        GAB.deposer( "ales", "alexis",'bin/db.txt',"210")
+          .must_equal "Identifiant ou mot de passe sont invalides"
+      end
+    end
+    
   end
 end
