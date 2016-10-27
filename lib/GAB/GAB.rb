@@ -1,7 +1,6 @@
 module GAB
-  def self.consulter(identifiant_client,pwd_client,db_file)
-     return [] if identifiant_client== nil || pwd_client==nil
-     puts identifiant_client.empty?
+  def self.consulter(identifiant_client,pwd_client,db_file) 
+    return [] if identifiant_client== nil || pwd_client==nil
     ligne = File.open(db_file, "r").readlines
     utilisateur= identifiant_client+"/"+pwd_client
     exist= `#{"grep -n #{utilisateur} #{db_file}"}`
