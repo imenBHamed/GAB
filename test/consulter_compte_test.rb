@@ -17,5 +17,12 @@ describe GAB do
           .must_equal "Votre compte contient:8001$"
       end
     end
+    
+      describe "cas avec inexistance d'un client" do
+      it "retourne un message d'erreur qui affiche 'Identifiant ou mot de passe sont invalides'" do
+        GAB.consulter( "alex", "alexis1", 'bin/db.txt' )
+          .must_equal "Identifiant ou mot de passe sont invalides"
+      end
+    end
   end 
 end
