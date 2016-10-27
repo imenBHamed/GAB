@@ -17,5 +17,13 @@ describe GAB do
           .must_equal "Identifiant ou mot de passe sont invalides"
       end
     end
+    
+    describe "cas avec montant invalide" do
+      it "retourne un message d'erreur :montant insuffisant" do
+        GAB.deposer( "alexis", "alexis1",'bin/db.txt',"-5632")
+          .must_equal "montant insuffisant"
+      end
+    end
+    
   end
 end
