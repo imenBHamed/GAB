@@ -20,8 +20,15 @@ describe GAB do
     
      describe "cas avec client deja existe dans la base de donnees" do
       it "retourne un message d'erreur contenant'Utilisateur deja existe dans la base de donnees' " do
-        GAB.creer("alexis", "alexis1","alexis_bush","admin","admin1",'bin/db.txt')
-          .must_equal "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
+        GAB.creer("alexis_bush", "alexis","alexis1","admin","admin",'bin/db.txt')
+          .must_equal "Utilisateur deja existe dans la base de donnees"
+      end
+    end
+    
+    describe "exemple de creation d'un nouveau client dans la base de donnees" do
+      it "retourne un message d'erreur contenant'Utilisateur deja existe dans la base de donnees' " do
+        GAB.creer("normand", "normand1","normand_lio","admin","admin",'bin/db.txt')
+          .must_equal "Votre compte a ete enregistre avec succes dans la base de donnees"
       end
     end
     
