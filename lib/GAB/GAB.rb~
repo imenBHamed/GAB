@@ -93,7 +93,9 @@ module GAB
     end
   end
   
-  def self.deposer(identifiant_client,pwd_client, db_file,montant)      
+  def self.deposer(identifiant_client,pwd_client, db_file,montant)
+    return [] if identifiant_client== nil || pwd_client==nil
+
     utilisateur= identifiant_client+"/"+pwd_client  
     ligne = File.open(db_file, "a+").readlines  
     if montant.to_i>0 then      
