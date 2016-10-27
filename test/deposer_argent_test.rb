@@ -2,7 +2,7 @@ require 'test_helper'
 require 'GAB'
 
 describe GAB do
-  describe ".creer" do
+  describe ".deposer" do
     
     describe "cas avec inexistance des arguments" do
       it "retourne [] " do
@@ -17,6 +17,5 @@ describe GAB do
           .must_equal "Identifiant ou mot de passe sont invalides"
       end
     end
-    
   end
 end

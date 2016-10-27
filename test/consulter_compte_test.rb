@@ -14,7 +14,7 @@ describe GAB do
     describe "exemple pour consulter le montant un client" do
       it "retourne le solde de client en question" do
         GAB.consulter( "alexis", "alexis1", 'bin/db.txt' )
-          .must_equal "Votre compte contient:8001$"
+          .must_equal "Votre compte contient:19266$"
       end
     end
     

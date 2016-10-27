@@ -68,19 +68,21 @@ module GAB
     end
   end 
   
-  def self.retirer(identifiant_client,pwd_client,db_file,montant) 
+  def self.retirer(identifiant_client,pwd_client,db_file,montant)
+    return [] if identifiant_client== nil || pwd_client==nil|| montant==nil
+
     ligne = File.open(db_file, "a+").readlines  
     utilisateur= identifiant_client+"/"+pwd_client
     if montant.to_i>0 then
       exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
       if exist[0].to_i > 0 then
+	compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
 	argent =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
 	if argent.to_i>0 then
 	  nouveauArgent= argent.to_i-montant.to_i
 	  if nouveauArgent> -101 then
 	    `#{"sed -i '#{compteur}s/#{argent}/#{nouveauArgent}/' #{db_file}"}`
-	    puts "operation effectuee avec suces"
+	    resultar= "operation effectuee avec succes"
 	  else
 	    resultat= "Desole,vous n''avez pas d'argent"
 	  end
