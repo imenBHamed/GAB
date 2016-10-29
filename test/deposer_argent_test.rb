@@ -17,18 +17,24 @@ describe GAB do
           .must_equal "Identifiant ou mot de passe sont invalides"
       end
     end
-     describe "cas avec montant invalid" do
-      it "retourne un message d'erreur contenant 'montant insuffisant' " do
+ 
+    
+    describe "cas avec montant invalide" do
+      it "retourne un message d'erreur :montant insuffisant" do
+ 
         GAB.deposer( "alexis", "alexis1",'bin/db.txt',"-5632")
           .must_equal "montant insuffisant"
       end
     end
+  
     
-    describe "exemple de deposer d'argent" do
-      it "retourne un message d'erreur contenant 'depot effectuee avec succes' " do
+    describe "exemple de deposer d''argent" do
+      it "retourne un message d''erreur contenant ''depot effectuee avec succes'' " do
+>>>>>>> 6cf994fb9effd487ca99d10df7f30edf58a233d2
         GAB.deposer( "jeny", "jeny1",'bin/db.txt',"1")
           .must_equal "Depot effectue avec succes"
       end
     end
+ 
   end
 end
