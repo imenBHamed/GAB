@@ -35,7 +35,9 @@ module GAB
   end
   
   def self.supprimer(identifiant_client, identifiant_admin,pwd_admin,db_file)
-    administrateur= identifiant_admin << "/" << pwd_admin  
+    return [] if identifiant_client== nil || identifiant_admin==nil ||pwd_admin == nil
+
+    administrateur= identifiant_admin << "/" << pwd_admin 
     position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i  
     position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
     
@@ -55,10 +57,10 @@ module GAB
     utilisateur=identifiant_client + "/" + pwd_client 
     exist= `#{"grep -n #{utilisateur} #{db_file}"}`
     if exist.to_i>0 then
-      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
       if !nouveau_pwd_client.empty? then
+	      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
 	utu=identifiant_client + "/" + nouveau_pwd_client 
-	`#{"sed -i '{old}s/#{old}/#{utu}/' #{db_file}"}`
+	`#{"sed -i '#{compteur}s/#{old}/#{utu}/' #{db_file}"}`
 	resultat= "Vous avez modifie votre compte!"
       else
 	resultat="vous devez enter un nouveau mot de passe"
@@ -82,7 +84,7 @@ module GAB
 	  nouveauArgent= argent.to_i-montant.to_i
 	  if nouveauArgent> -101 then
 	    `#{"sed -i '#{compteur}s/#{argent}/#{nouveauArgent}/' #{db_file}"}`
-	    resultar= "operation effectuee avec succes"
+	    resultat= "operation effectuee avec succes"
 	  else
 	    resultat= "Desole,vous n''avez pas d'argent"
 	  end
