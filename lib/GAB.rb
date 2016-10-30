@@ -1,5 +1,8 @@
 require 'GAB/version.rb'
-require 'GAB/GAB'
+require 'GAB/GAB.rb'
+require 'GAB/compte_client.rb'
+require 'GAB/administrateur.rb'
+require 'GAB/crud_client.rb'
+require 'GAB/transaction.rb'
 
-# Add requires for other files you add to your project here, so
-# you just need to require this one file in your bin file
+ 

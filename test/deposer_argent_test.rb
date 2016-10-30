@@ -30,7 +30,6 @@ describe GAB do
     
     describe "exemple de deposer d''argent" do
       it "retourne un message d''erreur contenant ''depot effectuee avec succes'' " do
->>>>>>> 6cf994fb9effd487ca99d10df7f30edf58a233d2
         GAB.deposer( "jeny", "jeny1",'bin/db.txt',"1")
           .must_equal "Depot effectue avec succes"
       end

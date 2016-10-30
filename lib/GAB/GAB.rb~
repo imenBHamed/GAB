@@ -1,120 +1,129 @@
 module GAB
-  def self.consulter(identifiant_client,pwd_client,db_file) 
+  
+  def self.consulter(identifiant_client, pwd_client, db_file) 
     return [] if identifiant_client== nil || pwd_client==nil
+      
+    position=CrudClient.rechercher(db_file, identifiant_client, pwd_client)
     
-    ligne = File.open(db_file, "r").readlines
-    utilisateur= identifiant_client+"/"+pwd_client
-    exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-    
-    if exist[0].to_i > 0 then
-      montant =  ligne[exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-      resultat= "Votre compte contient:#{montant}$"
-    else
-      resultat= "Identifiant ou mot de passe sont invalides"
-    end
+     if position.to_i > 0 then
+ 
+        res= CrudClient.affiche(db_file)
+ 
+        montant=res[position-1].argent
+        
+       resultat= "Votre compte contient:#{montant}$"
+       
+     else
+       
+       resultat= "Identifiant ou mot de passe sont invalides"
+       
+     end
   end
+  
   
   def self.creer(nom_client,identifiant_client,pwd_client,identifiant_admin,pwd_admin,db_file)
     return [] if identifiant_client== nil || pwd_client==nil|| nom_client==nil|| pwd_admin==nil || identifiant_admin==nil
     
-    administrateur= identifiant_admin << "/" << pwd_admin
-    utilisateur=identifiant_client << "/" << pwd_client << "/" << nom_client 
-    ligne = File.open(db_file, "a")
+
+    position_administrateur= CrudClient.rechercher(db_file, identifiant_admin, pwd_admin)
+    
+    position_client= CrudClient.rechercher(db_file, identifiant_client, pwd_client)
+
+    if position_administrateur > 0 then 
       
-     if `#{"grep -n #{administrateur} #{db_file}"}`.to_i>0 then
-       if `#{"grep -n #{utilisateur} #{db_file}"}`.to_i==0 then
-	 nouveauCompte= utilisateur << "/" <<  administrateur
-	 ligne.puts "\r"+ nouveauCompte
-	 resultat= "Votre compte a ete enregistre avec succes dans la base de donnees"
+       if position_client == -1 then
+	 
+	CrudClient .ecrire(db_file,CompteClient.new(identifiant_client,pwd_client,nom_client,"0"))
+	resultat= "Votre compte a ete enregistre avec succes dans la base de donnees"
+       
        else
+	 
 	 resultat= "Utilisateur deja existe dans la base de donnees"
+      
        end
      else
+       
        resultat= "Vous n'avez pas l''autorisation d''ajouter un nouveau compte"
-     end
+     
+    end
   end
   
   def self.supprimer(identifiant_client, identifiant_admin,pwd_admin,db_file)
     return [] if identifiant_client== nil || identifiant_admin==nil ||pwd_admin == nil
 
-    administrateur= identifiant_admin << "/" << pwd_admin 
-    position_admin=`#{"grep -n #{administrateur} #{db_file}"}`.to_i  
-    position_client= `#{"grep -n #{identifiant_client} #{db_file}"}`.to_i
+  
+    position_admin = CrudClient.rechercher(db_file, identifiant_admin, pwd_admin)
     
     if position_admin==1 then
-      if position_client >1 then
-	`#{"sed -i '/#{identifiant_client}/d' #{db_file}"}`
-	resultat= "votre compte a été supprimé!"
-      else
-	resultat= "Utilisateur n''existe pas dans la base de donnees"
-      end
+      
+	 CrudClient.supprimerClient(db_file, identifiant_client)
+      
     else
+      
       resultat= "Vous n'avez pas l''autorisation de supprimer un compte"
+   
     end
   end
   
-  def self.modifier(db_file, identifiant_client,pwd_client, nouveau_pwd_client)
-    utilisateur=identifiant_client + "/" + pwd_client 
-    exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-    if exist.to_i>0 then
-      if !nouveau_pwd_client.empty? then
-	      compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-	utu=identifiant_client + "/" + nouveau_pwd_client 
-	`#{"sed -i '#{compteur}s/#{old}/#{utu}/' #{db_file}"}`
+  
+  def self.modifier(db_file, identifiant_client, pwd_client, nouveau_pwd_client)
+       return [] if identifiant_client== nil || pwd_client==nil ||nouveau_pwd_client == nil
+
+        position_client= CrudClient.rechercher(db_file, identifiant_client, pwd_client)
+    
+    if position_client > 0 then
+      
+	CrudClient.modifierClient(db_file, position_client, pwd_client, nouveau_pwd_client)
+	
 	resultat= "Vous avez modifie votre compte!"
-      else
-	resultat="vous devez enter un nouveau mot de passe"
-      end
+     
+      
     else
       resultat="n''existe pas ce client dans la base de donnees"
     end
   end 
   
-  def self.retirer(identifiant_client,pwd_client,db_file,montant)
+  
+  def self.retirer(identifiant_client, pwd_client, db_file, montant)
     return [] if identifiant_client== nil || pwd_client==nil|| montant==nil
 
-    ligne = File.open(db_file, "a+").readlines  
-    utilisateur= identifiant_client+"/"+pwd_client
-    if montant.to_i>0 then
-      exist= `#{"grep -n #{utilisateur} #{db_file}"}`
-      if exist[0].to_i > 0 then
-	compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-	argent =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]
-	if argent.to_i>0 then
-	  nouveauArgent= argent.to_i-montant.to_i
-	  if nouveauArgent> -101 then
-	    `#{"sed -i '#{compteur}s/#{argent}/#{nouveauArgent}/' #{db_file}"}`
-	    resultat= "operation effectuee avec succes"
-	  else
-	    resultat= "Desole,vous n''avez pas d'argent"
-	  end
-	end
+        position_client= CrudClient.rechercher(db_file, identifiant_client, pwd_client)
+
+      if position_client > 0 then
+	
+	 Transaction.retirer_argent(position_client, db_file, montant)
+      
       else
+	
 	resultat= "Identifiant ou mot de passe sont invalides"
-      end
-    else
-      resultat= "montant insuffisant"
-    end
+      
+      end   
   end
   
-  def self.deposer(identifiant_client,pwd_client, db_file,montant)
+  
+  
+  def self.deposer(identifiant_client, pwd_client, db_file,montant)
     return [] if identifiant_client== nil || pwd_client==nil|| montant==nil
 
-    utilisateur= identifiant_client+"/"+pwd_client  
-    ligne = File.open(db_file, "a+").readlines  
     if montant.to_i>0 then      
-      exist= `#{"grep -n #{utilisateur} #{db_file}"}`      
-      if exist[0].to_i > 0 then   
-	compteur=exist[/[ A-Za-z0-9]*:/][/[0-9]+/].to_i
-	ancien_montant =  ligne[compteur-1][/-[ A-Za-z0-9]*/][/[0-9]+/]        
-	nouveau_montant= ancien_montant.to_i+montant.to_i        
-	`#{"sed -i '#{compteur}s/#{ancien_montant}/#{nouveau_montant}/' #{db_file}"}`
+      
+      position_client= CrudClient.rechercher(db_file, identifiant_client, pwd_client)
+     
+      if position_client > 0 then   
+	
+	Transaction.deposer_argent(position_client, db_file, montant)
+	
 	resultat= "Depot effectue avec succes"
+      
       else
+	
 	resultat= "Identifiant ou mot de passe sont invalides"
+     
       end
     else
+      
       resultat= "montant insuffisant"
+    
     end
   end
 

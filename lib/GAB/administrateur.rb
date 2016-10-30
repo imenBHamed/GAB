@@ -1,4 +1,4 @@
-class administrateur
+class Administrateur
   
 	attr_reader :identifiant_admin
 	attr_reader :pwd_admin
