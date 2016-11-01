@@ -41,8 +41,9 @@ command :creer_compte do |c|
       pwd_client= args.shift
       identifiant_admin= args.shift
       pwd_admin= args.shift
-   
-      resultat=GAB.creer(nom_client,identifiant_client,pwd_client,identifiant_admin,pwd_admin,db_file)
+       
+      resultat=GAB.creer(nom_client, identifiant_client, pwd_client, identifiant_admin, pwd_admin, Transaction::Compte.ouvrir(db_file))
+     
       puts resultat
   end
 end
@@ -57,9 +58,8 @@ command :supprimer_compte do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
       
-      resultat= GAB.supprimer(identifiant_client, identifiant_admin,pwd_admin,db_file)
+      resultat= GAB.supprimer(identifiant_client, identifiant_admin,pwd_admin,Transaction::Compte.ouvrir(db_file))
       puts resultat
-    
   end
 end
 
@@ -73,9 +73,8 @@ command :modifier_compte do |c|
       pwd_client= args.shift
       nouveau_pwd_client= args.shift
      
-      resultat=GAB.modifier(db_file,identifiant_client,pwd_client, nouveau_pwd_client)
+      resultat=GAB.modifier( identifiant_client, pwd_client, nouveau_pwd_client, Transaction::Compte.ouvrir(db_file) )
       puts resultat    
-
   end
 end
 
@@ -88,9 +87,8 @@ command :consulter_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       
-      resultat=GAB.consulter(identifiant_client,pwd_client,db_file)
+      resultat=GAB.consulter(identifiant_client, pwd_client, Transaction::Compte.ouvrir(db_file))
        puts resultat
-
   end
 end
 
@@ -104,7 +102,7 @@ command :deposer_argent do |c|
     pwd_client= args.shift
     montant= args.shift
     
-    resultat= GAB.deposer(identifiant_client,pwd_client, db_file,montant)
+    resultat= GAB.deposer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
     puts resultat
   end
 end
@@ -119,11 +117,22 @@ command :retirer_argent do |c|
       pwd_client= args.shift
       montant= args.shift
   
-      resultat=GAB.retirer(identifiant_client,pwd_client,db_file,montant)
+      resultat=GAB.retirer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
       puts resultat
   end
 end
 
+desc 'Lorsque le client deconnecte son compteGAB, toutes les modifications seront sauvegardees dans la base de donnees'
+arg_name ''
+command :deconnecter do |c|
+  c.action do |global_options,options,args|
+      db_file = global_options[:file]
+
+      Transaction::Compte.ouvrir(db_file)
+
+       GAB.deconnecter()
+  end
+end
 
 pre do |global,command,options,args|
   # Pre logic here
