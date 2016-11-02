@@ -16,23 +16,23 @@
       describe "cas avec aucune compte a consulter" do 
 	it "retourne [] " do
          
-	  GAB.creer( nil, nil, nil,nil, nil, @collection_clients)
+	  GAB.creer( nil, nil, nil,nil, nil, @collection_clients )
            .must_be_empty
         end
       end
       
            
       describe "cas avec administrateur invalides" do
-       it "retourne un message d'erreur contenant'Vous n'avez pas l''autorisation d''ajouter un nouveau compte' " do
+       it "rien a retourner " do
 	 
-	 GAB.creer("client3", "pwd3", "clientB","client11","pwd1",@collection_clients)
+	 GAB.creer( "client3", "pwd3", "clientB", "client11", "pwd1", @collection_clients )
             .must_equal nil
        end
      end
       describe "cas avec client deja existe dans la base de donnees" do
-	it "retourne la collection de clients initiale " do
-         
-	  GAB.creer("client2","pwd2","nomA","client1","pwd1",@collection_clients)
+	it "rien a retourner " do
+          
+	  GAB.creer( "client2", "pwd2", "nomA", "client1", "pwd1", @collection_clients )
            .must_equal nil
 	end
      end
