@@ -6,7 +6,7 @@
       
      before do
         
-      @clients= [CompteClient.new("client", "client1", "nomC", "10")]     
+      @clients= [CompteClient.new( "client", "client1", "nomC", "10")]     
      end
      
      describe "cas avec inexistance des arguments" do
@@ -17,15 +17,15 @@
      end 
      
      describe "cas avec inexistance d'un client" do       
-       it "retourne un message d'erreur contenant 'Identifiant ou mot de passe sont invalides' " do
+       it "retourne nil " do
 
-	 GAB.deposer( "ales", "alexis","210",@clients)
+	 GAB.deposer( "ales", "alexis","210", @clients)
 	 .must_equal nil
        end
      end  
      
      describe "cas avec montant invalide" do
-       it "retourne un message d'erreur :montant insuffisant" do
+       it "retourne nil" do
   
         GAB.deposer( "client", "client1","-5632", @clients)	
 	.must_equal nil
@@ -33,7 +33,7 @@
      end  
      
      describe "exemple de deposer d''argent" do
-       it "" do
+       it "retourne le montant final apres le depot " do
 
 	 GAB.deposer( "client", "client1", "10", @clients)
            .must_equal  20
