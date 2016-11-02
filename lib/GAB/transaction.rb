@@ -56,9 +56,6 @@ module Transaction
 	  nouveauArgent= @comptes[position].argent.to_i - montant.to_i
 	  if nouveauArgent > SEUIL_MAX then
 	    @comptes[position].argent = nouveauArgent
-	    "operation effectuee avec succes" 
-	  else   
-	    "Desole,vous n''avez pas d'argent" 
 	  end
 	end
       end

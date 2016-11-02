@@ -61,13 +61,12 @@ module GAB
      return [] if identifiant_client== nil || pwd_client==nil|| montant==nil
  
          client= Transaction::Compte.rechercher( clients, identifiant_client, pwd_client )
- 
+   
        if !client.nil? then
  	
  	Transaction::Compte.retirer_argent( client.pwd_client, montant )
        
-       end 
-        
+       end        
    end
      
    
