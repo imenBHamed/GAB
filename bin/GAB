@@ -119,7 +119,7 @@ command :retirer_argent do |c|
       pwd_client= args.shift
       montant= args.shift
   
-      GAB.retirer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
+      resul=GAB.retirer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
       Transaction::Compte.sauvegarder()
   end
 end

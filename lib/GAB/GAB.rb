@@ -51,7 +51,7 @@ module GAB
      
      if !client.nil? then
        
-         Transaction::Compte.modifier_client( client.pwd_client, nouveau_pwd_client )
+          Transaction::Compte.modifier_client( client.pwd_client, nouveau_pwd_client )
 
      end
    end 

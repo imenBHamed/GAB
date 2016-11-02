@@ -47,7 +47,7 @@ module Transaction
       def self.modifier_client( ancien_pwd, nouveau_pwd )	
  	position = position_client( ancien_pwd )  
 	@comptes[position].pwd_client = nouveau_pwd
-	 
+	@comptes
       end      
       
       def self.retirer_argent( pwd_client, montant )
@@ -58,7 +58,7 @@ module Transaction
 	  nouveauArgent= @comptes[position].argent.to_i - montant.to_i
 	  if nouveauArgent > SEUIL_MAX then
 	    @comptes[position].argent = nouveauArgent
-	  end
+	  end 
 	end
       end
       
