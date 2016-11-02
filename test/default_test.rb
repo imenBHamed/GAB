@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'GAB'
 
-describe "db_file" do
-  it "db_file" do
+describe "exp" do
+  it "cas" do
   end
 end

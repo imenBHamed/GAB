@@ -6,21 +6,36 @@ module Transaction
     class Compte
       
       def self.ouvrir( db_file )
+	 @fichier = db_file 
 	 @depot= CrudClient
          @comptes = @depot.lire( db_file )	
-	 @fichier = db_file
+	
       end        
       
-      def self.rechercher( identifiant, pwd )
-	 @comptes.find{|compte| compte.identifiant_client == identifiant && compte.pwd_client == pwd }
+      def self.rechercher( clients, identifiant, pwd )
+	
+ 	@comptes= clients
+	 
+	@comptes.find{|compte| compte.identifiant_client == identifiant && compte.pwd_client == pwd }
       end
       
-      def self.ajouter_client( client )
-	 @comptes <<  client
+      def self.rechercher_client_par_identifiant( identifiant )
+	
+	 @comptes.find{|compte| compte.identifiant_client == identifiant }
+      end
+      
+      
+      def self.ajouter_client( identifiant_client, pwd_client ,nom_client )
+	 @comptes <<  CompteClient.new( identifiant_client, pwd_client ,nom_client, "0" )
       end     
       
-      def self.supprimer_client( client )
-	@comptes.delete( client )
+      def self.supprimer_client( identifiant_client )
+	
+	client = rechercher_client_par_identifiant( identifiant_client ) 
+	
+	if !client.nil? then  
+	  @comptes.delete( client )
+	end
       end
       
       def self.position_client( mot_a_rechercher)
@@ -34,6 +49,7 @@ module Transaction
       end      
       
       def self.retirer_argent( pwd_client, montant )
+	
 	position = position_client( pwd_client )  
 	
 	if  @comptes[position].argent.to_i > SEUIL_MAX then    
@@ -56,10 +72,9 @@ module Transaction
       end
       
       
-      def self.deconnecter()
+      def self.sauvegarder()
        @depot.enregistrer(@fichier, @comptes)
       end
-      
-  
-   end
+     
+    end
 end

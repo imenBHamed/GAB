@@ -15,5 +15,11 @@
         end
       end
  
+       describe "exemple pour consulter le montant un client" do
+       it "retourne le solde de client en question" do
+         GAB.consulter( "client1", "client1", @f )
+           .must_equal "Votre compte contient:10$"
+       end
+     end
     end 
  end
