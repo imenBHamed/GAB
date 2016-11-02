@@ -42,7 +42,7 @@
        it "le compte a cree " do   
 	 @clients_apres = [cl1, cl2, cl3]  
 	
-	 GAB.creer( "client2", "pwd2", "clientB", "client1", "client1", @collection_clients )      
+	 GAB.creer( "client3", "pwd3", "clientB", "client1", "pwd1", @collection_clients )      
 	 .must_equal  @clients_apres
          end
        end
