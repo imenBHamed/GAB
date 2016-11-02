@@ -35,7 +35,9 @@ module Transaction
 	
 	if !client.nil? then  
 	  @comptes.delete( client )
+	  return @comptes
 	end
+	 
       end
       
       def self.position_client( mot_a_rechercher)
