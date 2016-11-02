@@ -37,7 +37,6 @@
 	end
      end
       
-      
          
      describe "exemple de creation d'un nouveau client dans la base de donnees" do
        it "le compte a cree " do   
