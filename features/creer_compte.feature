@@ -2,7 +2,7 @@
 Feature: creation d'un nouveau compte client
   on veux pouvoir effectuer des creation de comptes 
   
-    Scenario: creation un nouveau compte client 
+    Scenario: creation compte client 
      Given a file named "db_file.txt" with:
      """
      admin/admin/hn/000
