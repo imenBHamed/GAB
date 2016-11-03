@@ -95,7 +95,7 @@ command :consulter_compte do |c|
 end
 
 
-desc 'Le client ajoute une somme d''argent à son compte'
+desc 'Le client ajoute une somme d''argent a son compte'
 arg_name 'identifiant_client pwd_client montant'
 command :deposer_argent do |c|
   c.action do |global_options,options,args|
