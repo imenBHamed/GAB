@@ -4,6 +4,58 @@ require 'rubygems/package_task'
 require 'rdoc/task'
 require 'cucumber'
 require 'cucumber/rake/task'
+
+########################################
+task :consulter_compte_test do
+     sh "rake test TEST=test/consulter_compte_test.rb"     
+end
+
+task :creer_compte_test do
+     sh "rake test TEST=test/creer_compte_test.rb"     
+end
+
+task :modifier_compte_test do
+     sh "rake test TEST=test/modifier_compte_test.rb"     
+end
+
+task :supprimer_compte_test do
+     sh "rake test TEST=test/supprimer_compte_test.rb"     
+end
+
+task :retirer_argent_test do
+     sh "rake test TEST=test/retirer_argent_test.rb"     
+end
+
+task :deposer_argent_test do
+     sh "rake test TEST=test/deposer_argent_test.rb"     
+end
+
+task :acceptation_consulter do
+     sh "rake test_acceptation TEST=test_acceptation/consulter_test.rb"
+end
+
+task :acceptation_creer do
+     sh "rake test_acceptation TEST=test_acceptation/creer_compte_test.rb"
+end
+
+task :acceptation_modifier do
+     sh "rake test_acceptation TEST=test_acceptation/modifier_compte_test.rb"
+end
+
+task :acceptation_supprimer do
+     sh "rake test_acceptation TEST=test_acceptation/supprimer_compte_test.rb"
+end
+
+task :acceptation_deposer do
+     sh "rake test_acceptation TEST=test_acceptation/deposer_argent_test.rb"
+end
+
+task :acceptation_retirer do
+     sh "rake test_acceptation TEST=test_acceptation/retirer_argent_test.rb"
+end
+
+#############################################
+
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
@@ -36,9 +88,15 @@ task :cucumber => :features
 task 'cucumber:wip' => 'features:wip'
 task :wip => 'features:wip'
 require 'rake/testtask'
+
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList['test/*_test.rb']
+end
+
+Rake::TestTask.new(:test_acceptation) do |t|
+  t.libs << "test_acceptation"
+  t.test_files = FileList['test_acceptation/*_test.rb']
 end
 
 task :default => [:test,:features]
