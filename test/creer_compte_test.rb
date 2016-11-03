@@ -5,15 +5,15 @@
     describe ".creer" do    
       
  
-      let(:cl1) { CompteClient.new("client1","pwd1","nomC","10") }
-      let(:cl2) { CompteClient.new("client2","pwd2","nomA","102") }
-      let(:cl3) { CompteClient.new("client3", "pwd3", "clientB","0") }
+      let(:cl1) { CompteClient.new( "client1", "pwd1", "nomC","10" ) }
+      let(:cl2) { CompteClient.new( "client2", "pwd2", "nomA", "102" ) }
+      let(:cl3) { CompteClient.new( "client3", "pwd3", "clientB", "0" ) }
 
       before do
       @collection_client = [cl1, cl2]
       end
       
-      describe "cas avec aucune compte a consulter" do 
+      describe "cas avec aucun compte a consulter" do 
 	it "retourne [] " do
          
 	  GAB.creer( nil, nil, nil,nil, nil, @collection_client )
@@ -36,7 +36,6 @@
            .must_equal nil
 	end
      end
-      
          
      describe "exemple de creation d'un nouveau client dans la base de donnees" do
        it "le compte a cree " do   
