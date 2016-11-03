@@ -24,7 +24,7 @@
        end
      end   
       
-     describe "cas avec avec deppasemenr de seuil" do
+     describe "cas avec avec depassement de seuil" do
        it "retourne nil " do
          
 	 GAB.retirer( "client1", "client1", "5632", @clients)
