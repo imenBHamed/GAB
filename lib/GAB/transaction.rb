@@ -23,8 +23,7 @@ module Transaction
 	
 	 @comptes.find{|compte| compte.identifiant_client == identifiant }
       end
-      
-      
+          
       def self.ajouter_client( identifiant_client, pwd_client ,nom_client )
 	 @comptes <<  CompteClient.new( identifiant_client, pwd_client ,nom_client, "0" )
       end     
@@ -36,8 +35,7 @@ module Transaction
 	if !client.nil? then  
 	  @comptes.delete( client )
 	  return @comptes
-	end
-	 
+	end 
       end
       
       def self.position_client( mot_a_rechercher)
@@ -61,15 +59,13 @@ module Transaction
 	  end 
 	end
       end
-      
-      
+          
       def self.deposer_argent( pwd_client, montant)
 	position = position_client( pwd_client )        
 	ancien_montant = @comptes[position].argent.to_i    
 	nouveau_montant = ancien_montant + montant.to_i          
 	@comptes[position].argent = nouveau_montant
       end
-      
       
       def self.sauvegarder()
        @depot.enregistrer(@fichier, @comptes)
