@@ -124,6 +124,7 @@ command :retirer_argent do |c|
   end
 end
 
+
 pre do |global,command,options,args|
   # Pre logic here
   # Return true to proceed; false to abort and not call the
