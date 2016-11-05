@@ -8,6 +8,6 @@ bin/GAB deposer_argent identifiant_client pwd_client montant
 bin/GAB retirer_argent identifiant_client pwd_client montant
 
 NB: Vous devez saisir bumdle exec avant de mettre la commande
-Par exemple : bundle exec creerCompte nomClient identifiantClient pwdClient identifiantAdmin pwdAmin
+Par exemple : bundle exec creerCompte nom_client identifiant_client pwd_client identifiant_admin pwd_admin
 
 
