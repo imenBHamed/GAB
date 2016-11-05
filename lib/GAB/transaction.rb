@@ -3,7 +3,7 @@ module Transaction
    
    SEUIL_MAX= -101
        
-    class Compte
+    class TransactionCompte
       
       def self.ouvrir( db_file )
 	 @fichier = db_file 

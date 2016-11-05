@@ -42,9 +42,9 @@ command :creer_compte do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
        
-      GAB.creer(identifiant_client, pwd_client, nom_client, identifiant_admin, pwd_admin, Transaction::Compte.ouvrir(db_file))
+      GAB.creer(identifiant_client, pwd_client, nom_client, identifiant_admin, pwd_admin, Transaction::TransactionCompte.ouvrir(db_file))
       
-      Transaction::Compte.sauvegarder()
+      Transaction::TransactionCompte.sauvegarder()
       
   end
 end
@@ -59,9 +59,9 @@ command :supprimer_compte do |c|
       identifiant_admin= args.shift
       pwd_admin= args.shift
       
-      GAB.supprimer( identifiant_client, identifiant_admin,pwd_admin,Transaction::Compte.ouvrir(db_file))
+      GAB.supprimer( identifiant_client, identifiant_admin,pwd_admin,Transaction::TransactionCompte.ouvrir(db_file))
       
-      Transaction::Compte.sauvegarder()
+      Transaction::TransactionCompte.sauvegarder()
   end
 end
 
@@ -75,8 +75,8 @@ command :modifier_compte do |c|
       pwd_client= args.shift
       nouveau_pwd_client= args.shift
      
-      GAB.modifier( identifiant_client, pwd_client, nouveau_pwd_client, Transaction::Compte.ouvrir(db_file) )
-     Transaction::Compte.sauvegarder()   
+      GAB.modifier( identifiant_client, pwd_client, nouveau_pwd_client, Transaction::TransactionCompte.ouvrir(db_file) )
+     Transaction::TransactionCompte.sauvegarder()   
   end
 end
 
@@ -89,7 +89,7 @@ command :consulter_compte do |c|
       identifiant_client= args.shift
       pwd_client= args.shift
       
-      resultat=GAB.consulter(identifiant_client, pwd_client, Transaction::Compte.ouvrir(db_file))
+      resultat=GAB.consulter(identifiant_client, pwd_client, Transaction::TransactionCompte.ouvrir(db_file))
       puts resultat
   end
 end
@@ -104,8 +104,8 @@ command :deposer_argent do |c|
     pwd_client= args.shift
     montant= args.shift
     
-    GAB.deposer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
-    Transaction::Compte.sauvegarder()
+    GAB.deposer( identifiant_client, pwd_client, montant, Transaction::TransactionCompte.ouvrir(db_file))
+    Transaction::TransactionCompte.sauvegarder()
   end
 end
 
@@ -119,8 +119,8 @@ command :retirer_argent do |c|
       pwd_client= args.shift
       montant= args.shift
   
-      resul=GAB.retirer( identifiant_client, pwd_client, montant, Transaction::Compte.ouvrir(db_file))
-      Transaction::Compte.sauvegarder()
+      resul=GAB.retirer( identifiant_client, pwd_client, montant, Transaction::TransactionCompte.ouvrir(db_file))
+      Transaction::TransactionCompte.sauvegarder()
   end
 end
 
